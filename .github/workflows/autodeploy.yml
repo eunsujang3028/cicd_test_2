@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  autodeploy:
+  build-job:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,3 +18,17 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: application yml 추가
+        run: |
+          mkdir -p src/main/resources || true
+          echo "${{ secrets.APPLICATION_YML }}" > ./src/main/resources/application.yml
+          ls -al ./src/main/resources
+          cat ./src/main/resources/application.yml
+
+  deploy-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: github repository 소스 가져오기
+        uses: actions/checkout@v4
