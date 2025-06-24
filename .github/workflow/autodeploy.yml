@@ -1,0 +1,18 @@
+name : autodeployment with git-action
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  autodeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test1
+        runs: echo "test1"
+
+      - name: test2
+        run: |
+          pwd
+          ls -al
