@@ -23,12 +23,23 @@ jobs:
         run: |
           mkdir -p src/main/resources || true
           echo "${{ secrets.APPLICATION_YML }}" > ./src/main/resources/application.yml
-          ls -al ./src/main/resources
-          cat ./src/main/resources/application.yml
+#          ls -al ./src/main/resources
+#          cat ./src/main/resources/application.yml
 
-  deploy-job:
-    runs-on: ubuntu-latest
+      - name: jar(실행) 파일 생성하기
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean build
 
-    steps:
-      - name: github repository 소스 가져오기
-        uses: actions/checkout@v4
+      - name: 빌드된 jar 파일 이름 변경 및 이동하기
+        run: |
+          pwd
+          mv ./build/libs/*SNAPSHOT.jar ./app.jar
+          ls -al
+
+#  deploy-job:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: github repository 소스 가져오기
+#        uses: actions/checkout@v4
