@@ -37,9 +37,17 @@ jobs:
           mv ./build/libs/*SNAPSHOT.jar ./app.jar
           ls -al
 
-#  deploy-job:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: github repository 소스 가져오기
-#        uses: actions/checkout@v4
+      
+
+  deploy-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: app.jar 실행 파일을 ec2로 전송하기
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          user: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          source: ./app.jar
+          target: /home/ubuntu/prod/tobe
